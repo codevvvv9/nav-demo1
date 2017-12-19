@@ -43,7 +43,7 @@
             m: 'www. mcdonalds.com.cn'
         }
         //取出localStore中的store对应的hash,替换原来的
-        var hashInLocalStorage = JSON.parse(localStorage.getItem('store') || '')
+        var hashInLocalStorage = JSON.parse(localStorage.getItem('store') || 'null')
         if (hashInLocalStorage) {
             hash = hashInLocalStorage
         }
