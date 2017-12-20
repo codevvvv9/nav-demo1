@@ -17,16 +17,40 @@ kbd > button {
 kbd:hover > button {
     display: inline-block;
 }
+body{background: grey url(./bg.jpg) no-repeat center center;background-size: cover;}
 main {
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 #maindiv {
     display: inline-block;
 }
 #maindiv > div:nth-child(2) {
-    margin-left: 1em;
+    margin-left: -14px;
 }
 #maindiv > div:nth-child(3){
-    margin-left: 2em;
+    margin-left: -80px;
 }
-
+.wrapper {background: rgba(255, 255, 255, 0.4);border-radius: 10px;}
+.key{
+    width: 60px;
+    height: 48px;
+    background: linear-gradient(to bottom, #292929 0%,#111111 100%);
+    border: 1px solid #373737;
+    color: #c5c5c5;
+    border-radius: 6px;
+    box-shadow: 0 0 0 1px #1A1B1C, 0 0 0 2px #1F2020, 0 3px 0 2px #080808;
+    /* display: inline-flex;
+    align-items: center;
+    justify-content: center; */
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+    position: relative;
+}
+.row {margin: 20px;}
+.row .key {margin: 0 10px;}
+.key img {width: 20px; height: 20px; position: absolute; right: 5px; top: 2px;}
+.key .text {position: absolute; left: 5px; top: 2px;}

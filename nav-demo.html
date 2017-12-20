@@ -12,6 +12,7 @@
         
     </header>
     <main>
+        
         <div class="wrapper" id="maindiv">
 
         </div>
@@ -30,17 +31,23 @@
             'q': 'qq.com',
             'w': 'weibo.com',
             'e': 'ele.me',
-            'r': 'renren.com',
-            t: 'tianya.com',
+            'r': 'people.com.cn',
+            t: 'taobao.com',
             y: 'youtube.com',
-            u: 'uc.com',
+            u: 'www.uc.cn',
             i: 'iqiyi.com',
             o: 'opera.com',
-            p: undefined,
+            p: 'pinyin.sogou.com',
             a: 'acfun.tv',
-            s: 'sohu.com',
+            s: 'www.sina.com.cn',
+            g: 'bj.ganji.com',
+            h: 'huya.com',
+            l: 'longzhu.com',
             z: 'zhihu.com',
-            m: 'www. mcdonalds.com.cn'
+            x: 'xiedaimala.com',
+            c: 'cf.qq.com',
+            b: 'www.bilibili.com',
+            m: 'xiuxiu.web.meitu.com'
         }
         //取出localStore中的store对应的hash,替换原来的
         var hashInLocalStorage = JSON.parse(localStorage.getItem('store') || 'null')
@@ -51,16 +58,29 @@
         index = 0
         while (index < keys['length']){
             div1 = document.createElement('div')
+            div1.className = 'row'
             maindiv.appendChild(div1)
             row = keys[index]
             // console.log(row)
             index2 = 0
             while (index2 < row['length']){
                 key = document.createElement('kbd')
-                key.textContent = row[index2]
+                span = document.createElement('span')
+                span.className = 'text'
+                span.textContent = row[index2]
+                key.appendChild(span)
+                key.className = 'key'
                 buttonKey = document.createElement('button')
                 buttonKey.textContent = '编辑'
                 buttonKey.id = row[index2]
+                img = document.createElement('img')
+                if (hash[row[index2]]){
+                    //如果hash里面有，就用已经存在的
+                    img.src = 'http://' + hash[row[index2]] + '/favicon.ico'
+                } else{
+                    //没有就用下面自己花的
+                    img.src = './garageband_1x.png'
+                }
                 buttonKey.onclick = function (click) {
                     // console.log('我被点击啦')
                     // console.log(buttonKey) 这是不对的，因为buttonKey是个容器，只是存的最后一个数
@@ -72,6 +92,7 @@
                     localStorage.setItem('store', JSON.stringify(hash))
                     console.log(hash)
                 }
+                key.appendChild(img)
                 key.appendChild(buttonKey)
 
                 div1.appendChild(key)
