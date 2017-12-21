@@ -24,112 +24,152 @@
         
     </footer>
     <script>
-        var keys = {
+        //1、初始化数据
+        var hashA = init()
+        var keys = hashA['keys']
+        var hash = hashA['hash']
+
+        //2、生成键盘
+        //添加多个div,并遍历keys,生成了kbd标签
+        generateKeyboard(keys, hash)
+    
+
+         //3、监听键盘事件
+         listenToUser(hash)
+         
+       
+        
+         //以下全部是工具函数
+        //初始化数据
+        function init(){
+            var keys = {
             '0': {'0':'q','1':'w', '2':'e', '3':'r', '4':'t', '5':'y', '6':'u', '7':'i', '8':'o', '9':'p', 'length': 10},
             '1': ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
             '2': ['z', 'x', 'c', 'v', 'b', 'n', 'm'],
             'length': 3
-        }
-        var hash = {
-            'q': 'qq.com',
-            'w': 'weibo.com',
-            'e': 'ele.me',
-            'r': 'people.com.cn',
-            t: 'taobao.com',
-            y: 'youtube.com',
-            u: 'www.uc.cn',
-            i: 'iqiyi.com',
-            o: 'opera.com',
-            p: 'pinyin.sogou.com',
-            a: 'acfun.tv',
-            s: 'www.sina.com.cn',
-            g: 'bj.ganji.com',
-            h: 'huya.com',
-            l: 'longzhu.com',
-            z: 'zhihu.com',
-            x: 'xiedaimala.com',
-            c: 'cf.qq.com',
-            b: 'www.bilibili.com',
-            m: 'xiuxiu.web.meitu.com'
-        }
-        //取出localStore中的store对应的hash,替换原来的
-        var hashInLocalStorage = JSON.parse(localStorage.getItem('store') || 'null')
-        if (hashInLocalStorage) {
-            hash = hashInLocalStorage
-        }
-        //添加多个div,并遍历keys,生成了kbd标签
-        index = 0
-        while (index < keys['length']){
-            div1 = document.createElement('div')
-            div1.className = 'row'
-            maindiv.appendChild(div1)
-            row = keys[index]
-            // console.log(row)
-            index2 = 0
-            while (index2 < row['length']){
-                key = document.createElement('kbd')
-                span = document.createElement('span')
-                span.className = 'text'
-                span.textContent = row[index2]
-                key.appendChild(span)
-                key.className = 'key'
-                buttonKey = document.createElement('button')
-                buttonKey.textContent = '编辑'
-                buttonKey.id = row[index2]
-                img = document.createElement('img')
-                if (hash[row[index2]]){
-                    //如果hash里面有，就用已经存在的
-                    img.src = 'http://' + hash[row[index2]] + '/favicon.ico'
-                } else{
-                    //没有就用下面自己花的
-                    img.src = './garageband_1x.png'
-                }
+            }
+            var hash = {
+                'q': 'qq.com','w': 'weibo.com','e': 'ele.me','r': 'people.com.cn', t: 'taobao.com',y: 'youtube.com',u: 'www.uc.cn', i: 'iqiyi.com',o: 'opera.com',p: 'pinyin.sogou.com', 
+                a: 'acfun.tv', s: 'www.sina.com.cn',g: 'bj.ganji.com', h: 'huya.com',l: 'longzhu.com',
+                z: 'zhihu.com',x: 'xiedaimala.com',c: 'cf.qq.com', b: 'www.bilibili.com',m: 'xiuxiu.web.meitu.com'
+            }
+            //取出localStore中的store对应的hash,替换原来的
+            var hashInLocalStorage = getFromLocalStorage('store')
+            if (hashInLocalStorage) {
+                hash = hashInLocalStorage
+            }
 
-                img.onerror = function(msg){
+            return {
+                "keys": keys,
+                "hash": hash
+            }
+        }
+        //从LocalStorage中获得hash的函数
+        function getFromLocalStorage (name) {
+            return JSON.parse(localStorage.getItem(name) || 'null')
+        }
+
+        //动态添加标签以及标签的属性的函数
+        function tag (tagName, attributes) {
+            var element = document.createElement(tagName)
+            for(var key in attributes){
+                //key为className、id、textContent
+                element[key] = attributes[key]
+            }
+
+            return element
+        }
+
+        //生成按钮的函数
+        function createButton(buttonId){
+            var buttonKey = tag('button', {textContent: '编辑', id: buttonId})
+            // buttonKey.textContent = '编辑'
+            // buttonKey.id = row[index2]
+            buttonKey.onclick = function (click) {
+                /*console.log('我被点击啦')
+                console.log(buttonKey) 这是不对的，因为buttonKey是个容器，只是存的最后一个数
+                click['target']知道点击的是哪个键，click['target']['id']是这个键对应的id是哪个，也就是哪个字母    
+                console.log(click['target']['id'])*/
+                
+                var button2 = click.target
+                var img2 = button2.previousSibling
+                //yourClick = click.target.id
+                var key = button2['id']
+                var yourWebsite = prompt('请输入你想编辑的网址')
+                hash[key] = yourWebsite
+                img2.src = 'http://' + yourWebsite + '/favicon.ico'
+                
+                img2.onerror = function(msg){
                     msg.target.src = './garageband_1x.png'
                 }
-                buttonKey.onclick = function (click) {
-                    // console.log('我被点击啦')
-                    // console.log(buttonKey) 这是不对的，因为buttonKey是个容器，只是存的最后一个数
-                    //click['target']知道点击的是哪个键，click['target']['id']是这个键对应的id是哪个，也就是哪个字母    
-                    console.log(click['target']['id'])
-                    button2 = click.target
-                    img2 = button2.previousSibling
-                    //yourClick = click.target.id
-                    key = button2['id']
-                    yourWebsite = prompt('请输入你想编辑的网址')
-                    hash[key] = yourWebsite
-                    img2.src = 'http://' + yourWebsite + '/favicon.ico'
-
-                    img2.onerror = function(msg){
-                        msg.target.src = './garageband_1x.png'
-                    }
-                    //把你的修改存放到浏览器的loaclStorage里面
-                    localStorage.setItem('store', JSON.stringify(hash))
-                    console.log(hash)
-                }
-                key.appendChild(img)
-                key.appendChild(buttonKey)
-
-                div1.appendChild(key)
-                index2 = index2 + 1
-
+                //把你的修改存放到浏览器的loaclStorage里面
+                localStorage.setItem('store', JSON.stringify(hash))
+                console.log(hash)
             }
-            index = index + 1
+
+            return buttonKey
         }
 
-        //监听键盘事件,press是随便起的名字
-        document.onkeypress = function (press) {
-            //console.log('我发现你按了一个箭')
-            //console.log(press)//打印出press的hash
-            //console.log(press.key)
-            keyValue = press.key//获得你按得什么键
-            website = hash[keyValue]
-            console.log(website)
-            //location.href = 'http://' + website
-            //上面那个是在当前页面打开，不人性化，用下面的在新窗口打开
-            window.open('http://' + website, '_blank')
+        function createImage(domain){
+            var img = tag('img')
+            if (domain){
+                //如果hash里面有，就用已经存在的
+                img.src = 'http://' + domain + '/favicon.ico'
+            } else{
+                //没有就用下面自己花的
+                img.src = './garageband_1x.png'
+            }
+            
+            img.onerror = function(msg){
+                msg.target.src = './garageband_1x.png'
+            }
+
+            return img
         }
-    </script>
+
+        //动态生成键盘的函数
+        function generateKeyboard(keys, hash){
+            for (var index = 0; index < keys['length']; index = index + 1){
+                var div1 = tag('div', {className: 'row'})
+                // div1.className = 'row'
+                maindiv.appendChild(div1)
+                var row = keys[index]
+                // console.log(row)
+                for (var index2 = 0; index2 < row['length']; index2 = index2 + 1){
+                    var span = tag('span', {className: 'text', textContent: row[index2]})
+                    // span.className = 'text'
+                    // span.textContent = row[index2]
+                
+                    var buttonKey = createButton(row[index2])
+
+                    var img = createImage(hash[row[index2]])
+                    
+                    var key = tag('kbd', {className: 'key'})
+                    key.appendChild(span)
+                    // key.className = 'key'
+                    key.appendChild(img)
+                    key.appendChild(buttonKey)
+                    
+                    div1.appendChild(key)
+                }
+            
+            }
+        }
+        //监听用户的行为的函数
+        function listenToUser(hash){
+            //press是随便起的名字
+            document.onkeypress = function (press) {
+                //console.log('我发现你按了一个箭')
+                //console.log(press)//打印出press的hash
+                //console.log(press.key)
+                var keyValue = press.key//获得你按得什么键
+                var website = hash[keyValue]
+                console.log(website)
+                //location.href = 'http://' + website
+                //上面那个是在当前页面打开，不人性化，用下面的在新窗口打开
+                window.open('http://' + website, '_blank')
+            }
+        }
+        </script>
 </body>
 </html>
