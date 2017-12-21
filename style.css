@@ -24,7 +24,19 @@ main {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    position: relative;
 }
+main > p{
+    font-family: Arial, Helvetica, sans-serif; 
+    font-size: 20px;
+    color: whitesmoke;font-weight: bold;
+    position: absolute;
+    left: 200px; 
+    right: 200px; 
+    top: 150px;
+    background: rgba(1, 1, 1, 0.5);
+    border-radius: 8px;
+    animation-name: slidein;animation-duration: 3s;animation-timing-function: linear;}
 #maindiv {
     display: inline-block;
 }
@@ -34,7 +46,18 @@ main {
 #maindiv > div:nth-child(3){
     margin-left: -80px;
 }
-.wrapper {background: rgba(255, 255, 255, 0.4);border-radius: 10px;}
+.wrapper {background: rgba(255, 255, 255, 0.4);border-radius: 10px;animation-name: slidein;animation-duration: 2s;animation-timing-function: linear;}
+@keyframes slidein {
+    from {
+      margin-left: 50%;
+      width: 100%; 
+    }
+  
+    to {
+      margin-left: 0%;
+      width: 100%;
+    }
+  }
 .key{
     width: 60px;
     height: 48px;
