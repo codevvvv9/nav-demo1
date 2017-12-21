@@ -34,7 +34,18 @@ main {
 #maindiv > div:nth-child(3){
     margin-left: -80px;
 }
-.wrapper {background: rgba(255, 255, 255, 0.4);border-radius: 10px;}
+.wrapper {background: rgba(255, 255, 255, 0.4);border-radius: 10px;animation-name: slidein;animation-duration: 2s;animation-timing-function: linear;}
+@keyframes slidein {
+    from {
+      margin-left: 50%;
+      width: 100%; 
+    }
+  
+    to {
+      margin-left: 0%;
+      width: 100%;
+    }
+  }
 .key{
     width: 60px;
     height: 48px;
