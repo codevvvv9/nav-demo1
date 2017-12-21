@@ -81,13 +81,26 @@
                     //没有就用下面自己花的
                     img.src = './garageband_1x.png'
                 }
+
+                img.onerror = function(msg){
+                    msg.target.src = './garageband_1x.png'
+                }
                 buttonKey.onclick = function (click) {
                     // console.log('我被点击啦')
                     // console.log(buttonKey) 这是不对的，因为buttonKey是个容器，只是存的最后一个数
+                    //click['target']知道点击的是哪个键，click['target']['id']是这个键对应的id是哪个，也就是哪个字母    
                     console.log(click['target']['id'])
-                    yourClick = click.target.id
+                    button2 = click.target
+                    img2 = button2.previousSibling
+                    //yourClick = click.target.id
+                    key = button2['id']
                     yourWebsite = prompt('请输入你想编辑的网址')
-                    hash[yourClick] = yourWebsite
+                    hash[key] = yourWebsite
+                    img2.src = 'http://' + yourWebsite + '/favicon.ico'
+
+                    img2.onerror = function(msg){
+                        msg.target.src = './garageband_1x.png'
+                    }
                     //把你的修改存放到浏览器的loaclStorage里面
                     localStorage.setItem('store', JSON.stringify(hash))
                     console.log(hash)
