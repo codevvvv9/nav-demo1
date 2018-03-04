@@ -17,7 +17,7 @@ kbd > button {
 kbd:hover > button {
     display: inline-block;
 }
-body{background: grey url(./bg.jpg) no-repeat center center;background-size: cover;}
+body{background: grey url(./nav.png) no-repeat center center;background-size: cover;}
 main {
     text-align: center;
     display: flex;
